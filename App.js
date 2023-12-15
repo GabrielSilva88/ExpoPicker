@@ -6,11 +6,22 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pizza: 0
+      pizza: 0,
+      pizzas:[
+        {key:1, nome: 'Strogonoff', valor: 35.90},
+        {key:2, nome: 'Calabresa', valor: 60},
+        {key:3, nome: 'Brigadeiro', valor: 37},
+        {key:4, nome: 'portuguesa', valor: 25.70},
+        {key:5, nome: 'quatro queijos', valor: 25.70},
+
+      ]
     };
   };
   
   render() {
+    let pizzasItem = this.state.pizzas.map( (v,k) => {
+      return <Picker.Item key={k} value={k} label={v.nome}/>
+    })
     return (
       <View style={styles.conteiner}>
         <Text style={styles.logo}>Menu Pizzas</Text>
@@ -19,13 +30,12 @@ export default class App extends Component {
           selectedValue={this.state.pizza}
           onValueChange={(itemValue, itemIdex) => this.setState({ pizza: itemValue })}
         >
-          <Picker.Item key={1} value={1} label="Calabresa" />
-          <Picker.Item key={2} value={2} label="Brigadeiro" />
-          <Picker.Item key={3} value={3} label="Strogonoff" />
+         {pizzasItem}
         </Picker>
 
-        <Text style={styles.pizzas}>Você Escolhe: Pizza Calabresa</Text>
-        <Text style={styles.pizzas}>R$ 59,00</Text>
+        <Text style={styles.pizzas}>Você Escolhe: {this.state.pizzas[this.state.pizza].nome}</Text>
+        <Text style={styles.pizzas}>R$ {this.state.pizzas[this.state.pizza].valor.toFixed(2)}</Text>
+        
       </View>
     );
   }
